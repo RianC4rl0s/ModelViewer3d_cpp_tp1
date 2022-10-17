@@ -115,7 +115,7 @@ void Camera::Update()
     XMStoreFloat4x4(&View, view);
 
     // constrói matriz combinada (world x view x proj)
-    XMMATRIX world = XMMatrixRotationY(float(timer.Elapsed()));
+    XMMATRIX world = XMMatrixRotationY(-float(timer.Elapsed()));
     //XMMATRIX world = XMLoadFloat4x4(&World);
     XMMATRIX proj = XMLoadFloat4x4(&Proj);
     XMMATRIX WorldViewProj = world * view * proj;
@@ -240,8 +240,11 @@ void Camera::BuildGeometry()
     //fin.open("monkey.obj");
     //fin.open("thorus.obj");
     //fin.open("justos.obj");
+    
+    fin.open("justos_advanced.obj");
     //fin.open("ball.obj");
-    fin.open("capsule.obj");
+    //fin.open("capsule.obj");
+    //fin.open("house.obj");
     //fin.open("ccubeTriangulate.obj");
     //fin.open("ccubeNotTriangulate.obj");
 
@@ -257,16 +260,14 @@ void Camera::BuildGeometry()
                 fin >> posY;
                 fin >> posZ;
                 if (vCounter % 2 == 1) {
-                    if (posX > 0.4f || posY > -0.5)
-                        vertices[vCounter] = { XMFLOAT3(posX, posY, posZ), XMFLOAT4(Colors::Red) };
-                    else 
-                        vertices[vCounter] = { XMFLOAT3(posX, posY, posZ), XMFLOAT4(Colors::Gray) };
+                 
+                    vertices[vCounter] = { XMFLOAT3(-posX, posY, posZ), XMFLOAT4(Colors::Red) };
+                    
                 }
                 else {
-                    if (posX > 0.4 || posY >  -0.5)
-                        vertices[vCounter] = { XMFLOAT3(posX, posY, posZ), XMFLOAT4(Colors::Gold) };
-                    else
-                       vertices[vCounter] = { XMFLOAT3(posX, posY, posZ), XMFLOAT4(Colors::Gray) };
+           
+                    vertices[vCounter] = { XMFLOAT3(-posX, posY, posZ), XMFLOAT4(Colors::Gold) };
+                  
                 }
                 vCounter++;
             }
@@ -315,13 +316,22 @@ void Camera::BuildGeometry()
             }
             //temp = fin.get();
             if (temp == '\n') {
+
+                //inverter isso aq
+                /*
                 indices[faceCounter] = i1 - 1;
                 faceCounter++;
                 indices[faceCounter] = i2 - 1;
                 faceCounter++;
                 indices[faceCounter] = i3 - 1;
                 faceCounter++;
-                
+                */
+                indices[faceCounter] = i3 - 1;
+                faceCounter++;
+                indices[faceCounter] = i2 - 1;
+                faceCounter++;
+                indices[faceCounter] = i1 - 1;
+                faceCounter++;
             }
             else {
                 fin >> i4;
@@ -330,6 +340,8 @@ void Camera::BuildGeometry()
                 {
                     temp = fin.get();
                 }
+                // inverter isso aq 
+                /*
                 indices[faceCounter] = i1 - 1;
                 faceCounter++;
                 indices[faceCounter] = i2 - 1;
@@ -341,6 +353,20 @@ void Camera::BuildGeometry()
                 indices[faceCounter] = i3 - 1;
                 faceCounter++;
                 indices[faceCounter] = i4 - 1;
+                faceCounter++;
+
+                */
+                indices[faceCounter] = i3 - 1;
+                faceCounter++;
+                indices[faceCounter] = i2 - 1;
+                faceCounter++;
+                indices[faceCounter] = i1 - 1;
+                faceCounter++;
+                indices[faceCounter] = i4 - 1;
+                faceCounter++;
+                indices[faceCounter] = i3 - 1;
+                faceCounter++;
+                indices[faceCounter] = i1 - 1;
                 faceCounter++;
             }
             
